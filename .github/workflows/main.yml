@@ -16,15 +16,27 @@ jobs:
               exit 1
           }
 
-      - name: Create TOOLBOXLAP Folder in D Drive
+      - name: Tailscale IP
         run: |
           $folderPath = "D:\TOOLBOXLAP"
+          $licenseFile = Join-Path -Path $folderPath -ChildPath "LICENSE.txt"
+          $licenseText = @"
+Copyright © 2025 ToolboxLap.xyz
+All rights reserved. Do not remove or modify this file.
+YouTube: https://www.youtube.com/channel/UCDT4fs9JwrnQIXPrXX8yHeQ
+Facebook: https://www.facebook.com/profile.php?id=61567896692994
+Any changes will automatically disable related scripts!
+"@
+
           if (-Not (Test-Path -Path $folderPath)) {
               New-Item -Path $folderPath -ItemType Directory
               Write-Host "Folder TOOLBOXLAP has been created in D drive."
           } else {
               Write-Host "Folder TOOLBOXLAP already exists in D drive."
           }
+
+          Set-Content -Path $licenseFile -Value $licenseText -Encoding UTF8
+          Write-Host "License file created at $licenseFile"
 
       - name: Configure Core RDP Settings
         run: |
